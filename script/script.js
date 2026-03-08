@@ -7,9 +7,11 @@ document.getElementById('sign-btn').addEventListener('click', function () {
 	const passValue = passInput.value;
 
 	if (userValue == "admin" && passValue == "admin123") {
-		alert('login success')
+
+		window.location.assign("home.html")
 	}
 	else {
 		alert('failed')
+		return;
 	}
 })
