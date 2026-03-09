@@ -43,8 +43,6 @@ const filterIssues = (status) => {
 	cardContainer.innerHTML = "";
 
 
-
-
 	if (status === 'all') {
 		displayCard(allIssues);
 	}
@@ -53,33 +51,19 @@ const filterIssues = (status) => {
 		const filtered = allIssues.filter(item => item.status.toLowerCase() === status.toLowerCase());
 		displayCard(filtered)
 	}
-	spinner(false)
+
+
+	spinner(false);
 }
+
+
 
 
 
 const displayCard = (data) => {
 
 
-	data.forEach(issue => {
 
-
-		let priorityColor = '';
-		let priorityIcon = '';
-
-		if (issue.priority.toLowerCase() === 'high') {
-			priorityColor = 'bg-red-100 text-red-600';
-			priorityIcon = '<i class="fa-solid fa-circle-exclamation"></i>';
-		} else if (issue.priority.toLowerCase() === 'medium') {
-			priorityColor = 'bg-orange-100 text-orange-600';
-			priorityIcon = '<i class="fa-solid fa-circle-dot"></i>';
-		} else {
-			priorityColor = 'bg-blue-100 text-blue-600';
-			priorityIcon = '<i class="fa-solid fa-circle-arrow-down"></i>';
-		}
-	}
-
-	)
 
 
 
@@ -103,17 +87,16 @@ const displayCard = (data) => {
 
 		const priority = element.priority ? element.priority.toLowerCase() : "";
 
-
-		if (priority === 'high' || priority === 'medium') {
-			shadow = "border-t-green-600";
-		} else if (priority === 'low') {
-			shadow = "border-t-purple-600";
+		if (element.status.toLowerCase() === 'open') {
+			shadow = "border-t-green-600"; // ওপেন হলে সবুজ
+		} else {
+			shadow = "border-t-purple-600"; // ক্লোজড হলে পার্পল
 		}
 		div.innerHTML = `
 			<div onclick="showModalDetails('${element.id}')" class="bg-white gap-6 p-4 border-t-4  ${shadow} rounded-sm shadow-sm h-full">
 			<div class="flex justify-between ">
 				<img src="./assets/Open-Status.png">
-				<p class="text-red-500 bg-red-200  px-8 rounded-xl uppercase py-1">${element.priorityIcon}</p>
+				<p class="text-red-500 bg-red-200  px-8 rounded-xl uppercase py-1">${element.priority}</p>
 			</div>
 			<h1 class="font-bold text-xl mt-3">${element.title}</h1>
 			<h2 class="mt-2 line-clamp-2 text-gray-600">${element.description}</h2>
