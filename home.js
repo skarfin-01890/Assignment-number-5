@@ -1,10 +1,22 @@
 const cardContainer = document.getElementById("card-container");
 cardContainer.innerHTML = "";
 let allIssues = [];
+const spinner = (isLoading) => {
+	const loader = document.getElementById('loader');
+	if (isLoading) {
+		loader.classList.remove('hidden')
+	}
+	else {
+		loader.classList.add('hidden')
+	}
+}
+
 function loadCard() {
+	spinner(true);
 	fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues').then(res => res.json()).then((data) => {
 		allIssues = data.data
 		displayCard(data.data)
+		spinner(false)
 	}
 
 	);
@@ -12,8 +24,27 @@ function loadCard() {
 }
 loadCard();
 const filterIssues = (status) => {
+	const ardContainer = document.getElementById("card-container");
+	ardContainer.innerHTML = "";
+	spinner(true)
+	const allBtn = document.getElementById('all-btn');
+	const openBtn = document.getElementById('open-btn');
+	const closeBtn = document.getElementById('closed-btn');
+	const buttons = [allBtn, openBtn, closeBtn]
+
+	buttons.forEach(btn => {
+		btn.classList.remove('bg-blue-800', 'text-white')
+		btn.classList.add('bg-gray-200', 'text-black')
+	});
+	const activeBtn = document.getElementById(`${status}-btn`);
+	activeBtn.classList.remove('bg-gray-200', 'text-black');
+	activeBtn.classList.add('bg-blue-800', 'text-white')
 	const cardContainer = document.getElementById("card-container");
 	cardContainer.innerHTML = "";
+
+
+
+
 	if (status === 'all') {
 		displayCard(allIssues);
 	}
@@ -22,12 +53,30 @@ const filterIssues = (status) => {
 		const filtered = allIssues.filter(item => item.status.toLowerCase() === status.toLowerCase());
 		displayCard(filtered)
 	}
+	spinner(false)
 }
 
 
 
-
 const displayCard = (data) => {
+
+
+
+
+	const countElement = document.getElementById("issue-count");
+	if (countElement) {
+		countElement.innerText = data.length;
+	}
+
+
+	const cardContainer = document.getElementById("card-container");
+	cardContainer.innerHTML = "";
+
+
+
+
+
+
 	for (element of data) {
 		const div = document.createElement('div');
 		let shadow = "";
