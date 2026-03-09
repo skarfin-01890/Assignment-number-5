@@ -219,3 +219,14 @@ const showModalDetails = async (id) => {
 
 	modal.showModal();
 };
+const handleSearch = () => {
+	const searchText = document.getElementById('search-field').value.toLowerCase();
+
+
+	const searchedIssues = allIssues.filter(issue =>
+		issue.title.toLowerCase().includes(searchText)
+	);
+
+
+	displayCard(searchedIssues);
+};
