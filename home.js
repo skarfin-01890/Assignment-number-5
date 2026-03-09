@@ -61,6 +61,26 @@ const filterIssues = (status) => {
 const displayCard = (data) => {
 
 
+	data.forEach(issue => {
+
+
+		let priorityColor = '';
+		let priorityIcon = '';
+
+		if (issue.priority.toLowerCase() === 'high') {
+			priorityColor = 'bg-red-100 text-red-600';
+			priorityIcon = '<i class="fa-solid fa-circle-exclamation"></i>';
+		} else if (issue.priority.toLowerCase() === 'medium') {
+			priorityColor = 'bg-orange-100 text-orange-600';
+			priorityIcon = '<i class="fa-solid fa-circle-dot"></i>';
+		} else {
+			priorityColor = 'bg-blue-100 text-blue-600';
+			priorityIcon = '<i class="fa-solid fa-circle-arrow-down"></i>';
+		}
+	}
+
+	)
+
 
 
 	const countElement = document.getElementById("issue-count");
@@ -93,7 +113,7 @@ const displayCard = (data) => {
 			<div onclick="showModalDetails('${element.id}')" class="bg-white gap-6 p-4 border-t-4  ${shadow} rounded-sm shadow-sm h-full">
 			<div class="flex justify-between ">
 				<img src="./assets/Open-Status.png">
-				<p class="text-red-500 bg-red-200  px-8 rounded-xl uppercase py-1">${element.priority}</p>
+				<p class="text-red-500 bg-red-200  px-8 rounded-xl uppercase py-1">${element.priorityIcon}</p>
 			</div>
 			<h1 class="font-bold text-xl mt-3">${element.title}</h1>
 			<h2 class="mt-2 line-clamp-2 text-gray-600">${element.description}</h2>
@@ -134,6 +154,7 @@ const displayCard = (data) => {
 		cardContainer.appendChild(div)
 	}
 }
+
 
 const showModalDetails = async (id) => {
 	const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
